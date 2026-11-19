@@ -5,6 +5,9 @@ The public list of 3D packs for the Luxo emulator's 3D view. Each pack is a zip 
 `index.json` published from here, offers the packs that fit the game being played, and
 checks every download against the index.
 
+**New to this? [GUIDE.md](GUIDE.md) walks you through making a pack with an AI agent
+(Claude Code, Codex, OpenCode, …), step by step, no coding needed.**
+
 Every pack here can be edited: a pack with models comes with its **sources** (its Blender
 files and the scripts that rebuild it), and a rules-only pack is its own source. Anyone can
 improve a pack with their own agent (`pack_fork.py`) and offer the result back.
