@@ -9,6 +9,7 @@ on:
     paths: ["submissions/**"]
   push:
     paths: ["submissions/**"]
+  workflow_dispatch:
 permissions:
   contents: read
 jobs:
