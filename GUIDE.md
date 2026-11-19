@@ -12,9 +12,10 @@ whether you like the result.
 This guide takes you from nothing to a finished pack you can play on your phone, and, if
 you want, share with everyone.
 
-> **Coming soon.** The **Luxo app** for your phone (Step 7) is not published yet. You can
-> make a pack and check it on your computer now; this guide will say how to get the app
-> the day it is out.
+> **Coming soon.** Two things this guide relies on are not published yet: the **Luxo pack
+> tools** (Step 3) and the **Luxo app** for your phone (Step 7). The steps are written so
+> you can prepare everything else now. This guide will be updated with download links the
+> day they are out.
 
 ---
 
@@ -24,7 +25,7 @@ you want, share with everyone.
 2. [Words you will meet](#words-you-will-meet)
 3. [Step 1: Install Blender and connect it to agents](#step-1-install-blender-and-connect-it-to-agents)
 4. [Step 2: Install your AI agent](#step-2-install-your-ai-agent)
-5. [Step 3: Get the Luxo pack tools](#step-3-get-the-luxo-pack-tools)
+5. [Step 3: Get the Luxo pack tools (coming soon)](#step-3-get-the-luxo-pack-tools-coming-soon)
 6. [Step 4: Prepare your game](#step-4-prepare-your-game)
 7. [Step 5: Ask your agent to build the pack](#step-5-ask-your-agent-to-build-the-pack)
 8. [Step 6: While the agent works](#step-6-while-the-agent-works)
@@ -45,7 +46,7 @@ you want, share with everyone.
 | **A game you own**, as a ROM file you made from your own cartridge | The agent plays it to learn how it looks | – |
 | **Blender** (free 3D program) | The agent builds the 3D models in it | Free |
 | **An AI agent** (Claude Code, Codex, OpenCode, …) and an account for it | It does the work | A paid plan (see each agent below) |
-| **The Luxo pack tools** | Let the agent run the game and check the pack | Free |
+| **The Luxo pack tools** | Let the agent run the game and check the pack | Free, *coming soon* |
 | **An Android phone with the Luxo app** | To play with your pack | Free, *coming soon* |
 | **Time** | A first pack usually takes the agent one to a few hours | – |
 
@@ -202,59 +203,41 @@ like this:
 
 ---
 
-## Step 3: Get the Luxo pack tools
+## Step 3: Get the Luxo pack tools (coming soon)
 
-The tools are at <https://github.com/CPU-Studio/luxo-pack-tools>. They include `luxo3d`
-(which plays your game invisibly, records what is on screen, and draws previews of your
-pack), the connection your agent uses, and instructions written for agents.
+> **Not published yet.** This step will tell you where to download the Luxo pack tools.
+> Until then, you can do Steps 1, 2 and 4 so you're ready.
 
-1. **Download and set them up.** In a terminal, copy these three lines (press Enter after
-   each):
+When they are out, this step will be:
 
-   ```
-   git clone https://github.com/CPU-Studio/luxo-pack-tools.git ~/luxo-pack-tools
-   cd ~/luxo-pack-tools
-   sh setup.sh
-   ```
-
-   If it says `git: command not found`, first run `sudo apt update && sudo apt install -y git`
-   (it asks for your computer password; nothing shows while you type it, that is normal).
-
-   `setup.sh` checks your computer. If something is missing, it prints **one command to
-   copy**: run it (it asks for your password), then run `sh setup.sh` again. Building takes
-   a few minutes the first time. It is done when it says **Ready.**
-2. **Connect the tools to your agent** (once), from that folder:
-   - **Claude Code:** in `~/luxo-pack-tools`, type `claude`. It finds the Luxo tools by
-     itself and asks once whether to allow them: answer yes.
-   - **Codex:**
+1. **Download** the tools into a folder of their own, e.g. `luxo-tools` in your home
+   folder, and run the one-line setup it comes with.
+2. **Connect them to your agent** (once), using the full path to the folder:
+   - Claude Code: open the tools folder in the terminal and type `claude`: it finds the
+     Luxo tools by itself and asks you once whether to allow them; answer yes.
+   - Codex:
 
      ```
-     codex mcp add luxo3d -- python3 ~/luxo-pack-tools/tools/luxo3d/luxo3d_mcp.py
+     codex mcp add luxo3d -- python3 ~/luxo-tools/tools/luxo3d/luxo3d_mcp.py
      ```
 
-   - **OpenCode:**
+   - OpenCode:
 
      ```
-     opencode mcp add luxo3d -- python3 ~/luxo-pack-tools/tools/luxo3d/luxo3d_mcp.py
+     opencode mcp add luxo3d -- python3 ~/luxo-tools/tools/luxo3d/luxo3d_mcp.py
      ```
 
-   - **Other agents:** add an MCP server whose command is `python3` with the argument
-     `~/luxo-pack-tools/tools/luxo3d/luxo3d_mcp.py` (write your full home folder path if
-     `~` isn't accepted).
 3. **Check** that both **blender** and **luxo3d** show as connected (`claude mcp list`,
-   `codex mcp list` or `opencode mcp list`; start Blender's server first, Step 1.5).
+   `codex mcp list` or `opencode mcp list`).
 
 The tools come with instructions written for agents (`AGENTS.md`, `MODELS.md` and
 `EDITING.md`). You don't need to read them; your agent does.
-
-To get newer versions of the tools later: `cd ~/luxo-pack-tools`, then `git pull`, then
-`sh setup.sh`.
 
 ---
 
 ## Step 4: Prepare your game
 
-1. **Make a work folder** called `my-packs` inside the tools folder (`~/luxo-pack-tools/my-packs`). Everything for
+1. **Make a work folder**, for example `my-packs` inside the tools folder. Everything for
    your pack will live here.
 2. **Copy your ROM file** into it. Keep the name the file came with.
 3. **Save states (optional, and you can skip this).** The agent can start from the title
@@ -271,7 +254,7 @@ To get newer versions of the tools later: `cd ~/luxo-pack-tools`, then `git pull
 
 ## Step 5: Ask your agent to build the pack
 
-1. Open a terminal **in the tools folder** (`cd ~/luxo-pack-tools`), and start Blender with its
+1. Open a terminal **in the tools folder** (`cd ~/luxo-tools`), and start Blender with its
    MCP server on (Step 1.5).
 2. Start your agent: `claude`, `codex` or `opencode`.
 3. Paste the message below, after filling in the parts in **[brackets]**.
