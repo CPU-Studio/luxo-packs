@@ -15,12 +15,17 @@ Checks, without trusting anything inside the zip:
 With --luxo3d it also unpacks each zip and runs "luxo3d validate" (the app's
 own pack and model readers).
 
+A pack with models (.glb files) needs its source bundle beside it.  A
+rules-only pack (no models: voxel packs, whose art is rebuilt from the
+player's own ROM) needs none: its pack.json is its source.
+
 Source bundles (what people edit with their agents; see pack_fork.py):
 - the same path checks, with .blend .py and .txt allowed as well, at most
   2048 files and 90 MB (GitHub's limit is 100 MB a file);
 - pack.json at the top level, as in the pack, with a licence that allows
   edits (no "ND" licences);
-- at least one .blend and one .py (the scripts that rebuild the models);
+- for a pack with models, at least one .blend and one .py (the scripts that
+  rebuild the models);
 - the pack beside it (same name without -src) has the same id and version;
 - with --blender, every .blend is opened with scripts off and refused if it
   holds text blocks (embedded scripts), scripted drivers or linked library
@@ -45,6 +50,15 @@ SOURCE_MAX_FILES = 2048
 SOURCE_MAX_BYTES = 90 * 1024 * 1024
 ID_RE = re.compile(r"^[a-z0-9][a-z0-9-]{1,63}$")
 SHA1_RE = re.compile(r"^[0-9a-f]{40}$")
+
+
+def has_models(path):
+    """Whether a pack zip holds models (.glb); False when it cannot be read."""
+    try:
+        with zipfile.ZipFile(path) as z:
+            return any(n.lower().endswith(".glb") for n in z.namelist())
+    except (OSError, zipfile.BadZipFile):
+        return False
 
 
 def is_source_bundle(path):
@@ -167,10 +181,11 @@ def check_sources(path, blender=None):
     problems = check_entries(z, SOURCE_ALLOWED, SOURCE_MAX_FILES, SOURCE_MAX_BYTES)
     names = [n for n in z.namelist() if not n.endswith("/")]
     blends = [n for n in names if n.lower().endswith(".blend")]
-    if not blends:
-        problems.append("no .blend file (the models to edit)")
-    if not any(n.lower().endswith(".py") for n in names):
-        problems.append("no .py file (the scripts that rebuild the models)")
+    if any(n.lower().endswith(".glb") for n in names):
+        if not blends:
+            problems.append("no .blend file (the models to edit)")
+        if not any(n.lower().endswith(".py") for n in names):
+            problems.append("no .py file (the scripts that rebuild the models)")
     pack = None
     if "pack.json" not in names:
         problems.append("no pack.json at the top level")
@@ -221,8 +236,8 @@ def main():
         else:
             problems, pack = check_zip(path, luxo3d)
             src = path[:-len(".zip")] + "-src.zip"
-            if not problems and not os.path.exists(src):
-                problems.append("no source bundle beside it (%s; see pack_sources.py)"
+            if not problems and not os.path.exists(src) and has_models(path):
+                problems.append("it has models but no source bundle beside it (%s; see pack_sources.py)"
                                 % os.path.basename(src))
         if problems:
             failed += 1

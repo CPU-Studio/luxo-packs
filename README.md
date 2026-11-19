@@ -5,27 +5,27 @@ The public list of 3D packs for the Luxo emulator's 3D view. Each pack is a zip 
 `index.json` published from here, offers the packs that fit the game being played, and
 checks every download against the index.
 
-Every pack here comes with its **sources**: its Blender files and the scripts that rebuild
-it, so anyone can improve a pack with their own agent (`pack_fork.py`) and offer the result
-back.
+Every pack here can be edited: a pack with models comes with its **sources** (its Blender
+files and the scripts that rebuild it), and a rules-only pack is its own source. Anyone can
+improve a pack with their own agent (`pack_fork.py`) and offer the result back.
 
 ## Submitting a pack
 
-Open a pull request that adds two files to `submissions/`:
+Open a pull request that adds to `submissions/` the pack and, if it has models, its sources:
 
 | File | What | Made with |
 |---|---|---|
 | `<id>-<version>.zip` | the pack, as the app installs it | `luxo3d package PACKDIR --out …` |
-| `<id>-<version>-src.zip` | its sources: the pack plus `sources/` with every model's `.blend` file and the scripts that rebuild the models and rules | `pack_sources.py PACKDIR --out …` |
+| `<id>-<version>-src.zip` | its sources: the pack plus `sources/` with every model's `.blend` file and the scripts that rebuild the models and rules. Not needed for a rules-only pack (no models), whose `pack.json` is its source. | `pack_sources.py PACKDIR --out …` |
 
-CI checks both (`tools/registry_check.py`). The pack's `pack.json` needs:
+CI checks what you submit (`tools/registry_check.py`). The pack's `pack.json` needs:
 - `id` (lowercase letters, digits and `-`), `version`, `title`, `license`, `authors`;
 - `targets` listing the ROM IDs (SHA-1) it fits.
 
 The pack holds only `.json`, `.glb`, `.png`, `.ktx2` and `.md` files (50 MB at most). The
 sources may also hold `.blend`, `.py` and `.txt` (90 MB at most); a `.blend` must not
 contain text blocks (embedded scripts), scripted drivers or links to other files. To update
-a pack, submit both files again with a higher `version`.
+a pack, submit it again (with its sources, if it has models) with a higher `version`.
 
 An edit of someone else's pack keeps `"derived_from": "<id>@<version>"` (`pack_fork.py`
 writes it), credits the original authors, and follows their licence.
@@ -48,6 +48,10 @@ Not accepted:
 
 **Licence:** one that allows edits, such as CC-BY-4.0, CC-BY-SA-4.0 or CC0-1.0 (not "ND").
 Packs here can be forked; that is the point of the sources.
+
+**Packs with models must come with their sources**, so the maintainer can see how each model
+was made, and anyone can edit it. To share a model pack without its sources, use a
+private source or share the zip directly.
 
 ## Asking for a pack to be removed
 

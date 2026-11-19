@@ -8,8 +8,8 @@
 
     python3 pack_index.py build ZIPDIR --out OUTDIR [--key PATH] [--withdrawn id@version,...]
         Checks every pack <id>-<version>.zip in ZIPDIR and its source bundle
-        <id>-<version>-src.zip (registry_check.py; a pack without one is
-        skipped), copies both to OUTDIR/packs/, extracts a preview image if the
+        <id>-<version>-src.zip (registry_check.py; a pack with models but no
+        source bundle is skipped; a rules-only pack needs none), copies both to OUTDIR/packs/, extracts a preview image if the
         pack has one, and writes OUTDIR/index.json, OUTDIR/index.json.sig (the
         signature the app checks) and OUTDIR/index.key (the public key, for
         people who add this index as a private source).  Serve OUTDIR over
@@ -25,7 +25,8 @@ index.json, format 1:
       { "id", "version", "title", "authors", "license", "tier", "base",
         "targets": [{"system", "sha1": [...]}],
         "url": "packs/<id>-<version>.zip", "sha256", "size",
-        "source_url": "packs/<id>-<version>-src.zip", "source_sha256", "source_size",
+        "source_url": "packs/<id>-<version>-src.zip", "source_sha256", "source_size"
+          (all null for a rules-only pack without a source bundle: the pack is its source),
         "derived_from": "<id>@<version>" or null,
         "preview": "packs/<id>-<version>.png" or null, "withdrawn": false } ] }
 URLs are relative to index.json.  Withdrawn packs stay listed (so the app can
@@ -42,7 +43,7 @@ import sys
 import zipfile
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from registry_check import check_sources, check_zip  # noqa: E402
+from registry_check import check_sources, check_zip, has_models  # noqa: E402
 
 DEFAULT_KEY = os.path.expanduser("~/.config/luxo3d/index-key.pem")
 
@@ -90,17 +91,19 @@ def make_index(zipdir, key, withdrawn, place):
         problems, pack = check_zip(src)
         srcbundle = src[:-len(".zip")] + "-src.zip"
         if not problems:
-            if not os.path.exists(srcbundle):
-                problems = ["no source bundle %s" % os.path.basename(srcbundle)]
-            else:
+            if os.path.exists(srcbundle):
                 problems = check_sources(srcbundle)[0]
+            elif has_models(src):
+                problems = ["it has models but no source bundle %s" % os.path.basename(srcbundle)]
+            else:
+                srcbundle = None  # rules only: the pack is its own source
         if problems:
             failed += 1
             print("skipped %s: %s" % (name, "; ".join(problems)))
             continue
         base = "%s-%s" % (pack["id"], pack["version"])
         data = open(src, "rb").read()
-        sdata = open(srcbundle, "rb").read()
+        sdata = open(srcbundle, "rb").read() if srcbundle else None
         preview = None
         with zipfile.ZipFile(src) as z:
             pngs = sorted(n for n in z.namelist() if n.startswith("preview") and n.endswith(".png"))
@@ -110,18 +113,19 @@ def make_index(zipdir, key, withdrawn, place):
                     f.write(z.read(pngs[0]))
                 preview = place(tmp, "preview", base + ".png")
                 os.remove(tmp)
-            has_models = any(n.endswith(".glb") for n in z.namelist())
+            with_models = any(n.endswith(".glb") for n in z.namelist())
         entries.append({
             "id": pack["id"], "version": pack["version"], "title": pack["title"],
             "authors": pack.get("authors", []), "license": pack["license"],
-            "tier": pack.get("tier") or ("sculpted" if has_models else "voxel"),
+            "tier": pack.get("tier") or ("sculpted" if with_models else "voxel"),
             "base": pack.get("base") or None,
             "derived_from": pack.get("derived_from") or None,
             "targets": pack["targets"],
             "url": place(src, "zip", base + ".zip"),
             "sha256": hashlib.sha256(data).hexdigest(), "size": len(data),
-            "source_url": place(srcbundle, "src", base + "-src.zip"),
-            "source_sha256": hashlib.sha256(sdata).hexdigest(), "source_size": len(sdata),
+            "source_url": place(srcbundle, "src", base + "-src.zip") if srcbundle else None,
+            "source_sha256": hashlib.sha256(sdata).hexdigest() if srcbundle else None,
+            "source_size": len(sdata) if srcbundle else None,
             "preview": preview, "withdrawn": "%s@%s" % (pack["id"], pack["version"]) in withdrawn,
         })
     index = {"format": 1,
