@@ -1,0 +1,61 @@
+{
+ "format": 1,
+ "generated": "2026-11-19T08:51:05Z",
+ "packs": [
+  {
+   "id": "ladx-diorama",
+   "version": "0.2.1",
+   "title": "Link's Awakening DX Diorama",
+   "authors": [
+    "kienct",
+    "Claude"
+   ],
+   "license": "CC-BY-SA-4.0",
+   "tier": "sculpted",
+   "base": null,
+   "derived_from": null,
+   "targets": [
+    {
+     "system": "gb",
+     "sha1": [
+      "363d184d9b1e9faa5a2facd80897b7e118446164"
+     ]
+    }
+   ],
+   "url": "submissions/ladx-diorama-0.2.1.zip",
+   "sha256": "69adbd6b319656bcae903a5c9606920f57bbc481d3143acdd3e9be3847eabff2",
+   "size": 4640812,
+   "source_url": "submissions/ladx-diorama-0.2.1-src.zip",
+   "source_sha256": "5035a296deca4893fbde2483a20bc979acda773d5403b68b05665af02e60739b",
+   "source_size": 7668656,
+   "preview": null,
+   "withdrawn": false
+  },
+  {
+   "id": "smk-raceway",
+   "version": "0.1.1",
+   "title": "Super Mario Kart: Raceway in 3D",
+   "authors": [],
+   "license": "CC-BY-SA-4.0",
+   "tier": "sculpted",
+   "base": null,
+   "derived_from": null,
+   "targets": [
+    {
+     "system": "snes",
+     "sha1": [
+      "47e103d8398cf5b7cbb42b95df3a3c270691163b"
+     ]
+    }
+   ],
+   "url": "submissions/smk-raceway-0.1.1.zip",
+   "sha256": "0dc5b9787f8c06105036c0166fce2af85114a926c820406c8ca69a6ea0c837b8",
+   "size": 1995872,
+   "source_url": "submissions/smk-raceway-0.1.1-src.zip",
+   "source_sha256": "a474c5fb1d011a5b6f4b010dc8bce7190add4c719b3863cf8774d67b9aabe425",
+   "source_size": 1454182,
+   "preview": null,
+   "withdrawn": false
+  }
+ ]
+}

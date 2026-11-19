@@ -1,0 +1,34 @@
+# Checks every submitted 3D pack and its source bundle: file names and types,
+# size limits, no ROM data, the pack.json fields the index needs, a source
+# bundle beside each pack, and no embedded scripts, scripted drivers or linked
+# files in its .blend files (opened in Blender with scripts off).  Signing the
+# index is not done here: the signing key stays with the maintainer (README.md).
+name: check packs
+on:
+  pull_request:
+    paths: ["submissions/**"]
+  push:
+    paths: ["submissions/**"]
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      # The release the packs' .blend files are saved with (older Blender may not
+      # open them).  Raise it when submissions move to a newer Blender.
+      - name: Install Blender 5.2.2
+        run: |
+          curl -sSfL https://download.blender.org/release/Blender5.2/blender-5.2.2-linux-x64.tar.xz | tar -xJ
+          sudo apt-get update && sudo apt-get install -y libxi6 libxxf86vm1 libxfixes3 libxrender1 libgl1 libegl1 libxkbcommon0 libsm6
+          echo "$PWD/blender-5.2.2-linux-x64" >> "$GITHUB_PATH"
+      - name: Check packs and sources
+        run: |
+          shopt -s nullglob
+          zips=(submissions/*.zip)
+          if [ ${#zips[@]} -eq 0 ]; then echo "no packs submitted"; exit 0; fi
+          python3 tools/registry_check.py "${zips[@]}" --blender blender

@@ -1,0 +1,35 @@
+# Serves the repository as it is (index.json at the top, zips in submissions/) on GitHub Pages.
+# Nothing is signed here: the maintainer signs index.json on their machine and pushes it.
+name: Publish to GitHub Pages
+on:
+  push:
+    branches: [main]
+    paths: ["index.json", "index.json.sig", "index.key", "previews/**", "submissions/**"]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: true
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Keep only what the app reads
+        run: |
+          mkdir site
+          cp index.json index.json.sig index.key site/
+          cp -r submissions site/
+          [ -d previews ] && cp -r previews site/ || true
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+      - id: deployment
+        uses: actions/deploy-pages@v4
