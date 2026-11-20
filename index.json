@@ -1,6 +1,6 @@
 {
  "format": 1,
- "generated": "2026-11-19T17:42:33Z",
+ "generated": "2026-11-20T00:32:43Z",
  "packs": [
   {
    "id": "ladx-diorama",
@@ -83,6 +83,35 @@
    "source_url": "submissions/tank-1990-nes-0.1.0-src.zip",
    "source_sha256": "3e2ba2638550d9478bdcd0a3f71524e62542acdb6d815dc66f98e84c94ca3f0a",
    "source_size": 7432638,
+   "preview": null,
+   "withdrawn": false
+  },
+  {
+   "id": "tank-1990-nes",
+   "version": "0.1.1",
+   "title": "Tank 1990: Battlefield in Depth",
+   "authors": [
+    "reaper",
+    "OpenCode (DeepSeek V4.1 Flash)"
+   ],
+   "license": "CC-BY-SA-4.0",
+   "tier": "sculpted",
+   "base": null,
+   "derived_from": null,
+   "targets": [
+    {
+     "system": "nes",
+     "sha1": [
+      "c11aca89b82891aa0a6bcd313b1c2a2e9cd37253"
+     ]
+    }
+   ],
+   "url": "submissions/tank-1990-nes-0.1.1.zip",
+   "sha256": "397f42d9af6548edb725c8e81f46f7bdaff6acbd8a676d33044912411cd781aa",
+   "size": 2994439,
+   "source_url": "submissions/tank-1990-nes-0.1.1-src.zip",
+   "source_sha256": "caa2571e2f2fb2563329c2eed21cdb33fec214f70cd03dbb2aae78be3feadc0a",
+   "source_size": 7432631,
    "preview": null,
    "withdrawn": false
   }
