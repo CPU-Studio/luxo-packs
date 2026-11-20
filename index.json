@@ -1,7 +1,36 @@
 {
  "format": 1,
- "generated": "2026-11-20T00:32:43Z",
+ "generated": "2026-11-20T09:26:51Z",
  "packs": [
+  {
+   "id": "jackal-nes",
+   "version": "0.1.0",
+   "title": "Jackal: Beachhead in Depth",
+   "authors": [
+    "reaper",
+    "OpenCode (DeepSeek V4.1 Flash)"
+   ],
+   "license": "CC-BY-SA-4.0",
+   "tier": "sculpted",
+   "base": null,
+   "derived_from": null,
+   "targets": [
+    {
+     "system": "nes",
+     "sha1": [
+      "813e6a8bc0a502bb393f8729b1bc19836d5421a5"
+     ]
+    }
+   ],
+   "url": "submissions/jackal-nes-0.1.0.zip",
+   "sha256": "8d46e581f10ec081a52ffd64930e988ce57e14e5535733a92b78ed456f1d53f0",
+   "size": 3013367,
+   "source_url": "submissions/jackal-nes-0.1.0-src.zip",
+   "source_sha256": "5092d29b6aae950b54ff0cafac5825f785c06ff7e5dbd17a1c4570be3936264a",
+   "source_size": 4167608,
+   "preview": null,
+   "withdrawn": false
+  },
   {
    "id": "ladx-diorama",
    "version": "0.2.1",
