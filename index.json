@@ -1,7 +1,36 @@
 {
  "format": 1,
- "generated": "2026-11-20T09:26:51Z",
+ "generated": "2026-11-22T02:42:14Z",
  "packs": [
+  {
+   "id": "contra-diorama",
+   "version": "0.3.0",
+   "title": "Contra diorama",
+   "authors": [
+    "kienct",
+    "Claude"
+   ],
+   "license": "CC-BY-SA-4.0",
+   "tier": "sculpted",
+   "base": null,
+   "derived_from": null,
+   "targets": [
+    {
+     "system": "nes",
+     "sha1": [
+      "979494e7869ac7ab4815fdbd1dc99f893f713fbf"
+     ]
+    }
+   ],
+   "url": "submissions/contra-diorama-0.3.0.zip",
+   "sha256": "b80dd5427ce0b0b3e73127e4133837a5eec790af299fe1858bc720cca658114a",
+   "size": 1215968,
+   "source_url": "submissions/contra-diorama-0.3.0-src.zip",
+   "source_sha256": "af42d4ee039821535e70f30e347e16e6a54f309fc50f10cc77d38f9ca60afbaf",
+   "source_size": 844827,
+   "preview": null,
+   "withdrawn": false
+  },
   {
    "id": "jackal-nes",
    "version": "0.1.0",
