@@ -1,6 +1,6 @@
 {
  "format": 1,
- "generated": "2026-11-22T02:42:14Z",
+ "generated": "2026-11-22T06:39:12Z",
  "packs": [
   {
    "id": "contra-diorama",
@@ -28,6 +28,35 @@
    "source_url": "submissions/contra-diorama-0.3.0-src.zip",
    "source_sha256": "af42d4ee039821535e70f30e347e16e6a54f309fc50f10cc77d38f9ca60afbaf",
    "source_size": 844827,
+   "preview": null,
+   "withdrawn": false
+  },
+  {
+   "id": "contra-diorama",
+   "version": "0.4.0",
+   "title": "Contra diorama",
+   "authors": [
+    "kienct",
+    "Claude"
+   ],
+   "license": "CC-BY-SA-4.0",
+   "tier": "sculpted",
+   "base": null,
+   "derived_from": null,
+   "targets": [
+    {
+     "system": "nes",
+     "sha1": [
+      "979494e7869ac7ab4815fdbd1dc99f893f713fbf"
+     ]
+    }
+   ],
+   "url": "submissions/contra-diorama-0.4.0.zip",
+   "sha256": "1847ade5a2c8702aae6cb273e7d87fed5a0ff97e7a73593748462f94bb961d65",
+   "size": 2809863,
+   "source_url": "submissions/contra-diorama-0.4.0-src.zip",
+   "source_sha256": "6cb1de921f3eab51bf8d97db5cfb7e9df6e1f3ed6e2ea7425a8583d74fb2f93c",
+   "source_size": 2320898,
    "preview": null,
    "withdrawn": false
   },
