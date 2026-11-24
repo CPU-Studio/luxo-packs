@@ -7,9 +7,9 @@
         (PackIndex.TRUSTED_KEYS).
 
     python3 pack_index.py build ZIPDIR --out OUTDIR [--key PATH] [--withdrawn id@version,...]
-        Checks every pack <id>-<version>.zip in ZIPDIR and its source bundle
-        <id>-<version>-src.zip (registry_check.py; a pack with models but no
-        source bundle is skipped; a rules-only pack needs none), copies both to OUTDIR/packs/, extracts a preview image if the
+        Checks every pack <id>-<version>.zip in ZIPDIR and, when there is one,
+        its source bundle <id>-<version>-src.zip (registry_check.py; the bundle
+        is optional), copies both to OUTDIR/packs/, extracts a preview image if the
         pack has one, and writes OUTDIR/index.json, OUTDIR/index.json.sig (the
         signature the app checks) and OUTDIR/index.key (the public key, for
         people who add this index as a private source).  Serve OUTDIR over
@@ -26,7 +26,7 @@ index.json, format 1:
         "targets": [{"system", "sha1": [...]}],
         "url": "packs/<id>-<version>.zip", "sha256", "size",
         "source_url": "packs/<id>-<version>-src.zip", "source_sha256", "source_size"
-          (all null for a rules-only pack without a source bundle: the pack is its source),
+          (all null for a pack without a source bundle: the pack is what there is to edit),
         "derived_from": "<id>@<version>" or null,
         "preview": "packs/<id>-<version>.png" or null, "withdrawn": false } ] }
 URLs are relative to index.json.  Withdrawn packs stay listed (so the app can
@@ -43,7 +43,7 @@ import sys
 import zipfile
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from registry_check import check_sources, check_zip, has_models  # noqa: E402
+from registry_check import check_sources, check_zip  # noqa: E402
 
 DEFAULT_KEY = os.path.expanduser("~/.config/luxo3d/index-key.pem")
 
@@ -93,10 +93,8 @@ def make_index(zipdir, key, withdrawn, place):
         if not problems:
             if os.path.exists(srcbundle):
                 problems = check_sources(srcbundle)[0]
-            elif has_models(src):
-                problems = ["it has models but no source bundle %s" % os.path.basename(srcbundle)]
             else:
-                srcbundle = None  # rules only: the pack is its own source
+                srcbundle = None  # no sources given: the pack is what there is to edit
         if problems:
             failed += 1
             print("skipped %s: %s" % (name, "; ".join(problems)))

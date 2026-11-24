@@ -1,7 +1,7 @@
-# Checks every submitted 3D pack and its source bundle: file names and types,
-# size limits, no ROM data, the pack.json fields the index needs, a source
-# bundle beside each pack, and no embedded scripts, scripted drivers or linked
-# files in its .blend files (opened in Blender with scripts off).  Signing the
+# Checks every submitted 3D pack, and its source bundle when one comes with it
+# (they are optional): file names and types, size limits, no ROM data, the
+# pack.json fields the index needs, and no embedded scripts, scripted drivers or
+# linked files in a bundle's .blend files (opened in Blender with scripts off).  Signing the
 # index is not done here: the signing key stays with the maintainer (README.md).
 name: check packs
 on:

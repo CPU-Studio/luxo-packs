@@ -77,7 +77,8 @@ allowance. Plans with higher limits make a first pack much smoother.
 - **Pack**: the result: a folder (and later a `.zip` file) with a `pack.json` file, which
   holds the rules, and a `models` folder, which holds the 3D models.
 - **Source bundle**: the pack plus the Blender files and scripts used to build it, so
-  anyone can improve it later. It ends in `-src.zip`.
+  others can change the models more easily later. It ends in `-src.zip`. It is optional:
+  the public list takes a pack without one.
 - **ROM ID**: a fingerprint of your game file (40 letters and digits). The pack lists it so
   Luxo knows which game the pack is for. The agent works it out for you.
 - **Save state**: a snapshot of a game at one moment, like a bookmark. Agents use them to
@@ -380,12 +381,13 @@ Ask your agent:
 
 ```
 Please prepare my pack my-packs/[pack-id] for the public Luxo pack list, following
-the "Share" step in tools/luxo3d/EDITING.md: make [pack-id]-[version].zip and, since
-it has models, [pack-id]-[version]-src.zip, then run registry_check.py on both
-with --blender and tell me the result.
+the "Share" step in tools/luxo3d/EDITING.md: make [pack-id]-[version].zip, and
+[pack-id]-[version]-src.zip too if I want to share the Blender files, then run
+registry_check.py on what you made (with --blender for the second) and tell me the result.
 ```
 
-Both files must pass the check. A pack with **no** 3D models needs only the first file.
+The pack file must pass the check, and so must the second file if you made one. The second
+file is optional: the pack alone is enough.
 
 ### 2. Send them (a "pull request")
 
