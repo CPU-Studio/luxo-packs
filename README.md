@@ -8,18 +8,20 @@ checks every download against the index.
 **New to this? [GUIDE.md](GUIDE.md) walks you through making a pack with an AI agent
 (Claude Code, Codex, OpenCode, …), step by step, no coding needed.**
 
-Every pack here can be edited: a pack with models comes with its **sources** (its Blender
-files and the scripts that rebuild it), and a rules-only pack is its own source. Anyone can
-improve a pack with their own agent (`pack_fork.py`) and offer the result back.
+Every pack here can be edited: anyone can improve a pack with their own agent
+(`pack_fork.py`) and offer the result back. Some packs also come with their **sources** (the
+Blender files and scripts their models were made with), which makes the models easier to
+change; a pack without them is edited as it is.
 
 ## Submitting a pack
 
-Open a pull request that adds to `submissions/` the pack and, if it has models, its sources:
+Open a pull request that adds the pack to `submissions/`. A pack that works is enough; its
+sources are welcome but not asked for:
 
 | File | What | Made with |
 |---|---|---|
 | `<id>-<version>.zip` | the pack, as the app installs it | `luxo3d package PACKDIR --out …` |
-| `<id>-<version>-src.zip` | its sources: the pack plus `sources/` with every model's `.blend` file and the scripts that rebuild the models and rules. Not needed for a rules-only pack (no models), whose `pack.json` is its source. | `pack_sources.py PACKDIR --out …` |
+| `<id>-<version>-src.zip` | **optional**, its sources: the pack plus `sources/` with the models' `.blend` files and the scripts that rebuild the models and rules, for those who want others to be able to edit the models in Blender. | `pack_sources.py PACKDIR --out …` |
 
 CI checks what you submit (`tools/registry_check.py`). The pack's `pack.json` needs:
 - `id` (lowercase letters, digits and `-`), `version`, `title`, `license`, `authors`;
@@ -28,7 +30,7 @@ CI checks what you submit (`tools/registry_check.py`). The pack's `pack.json` ne
 The pack holds only `.json`, `.glb`, `.png`, `.ktx2` and `.md` files (50 MB at most). The
 sources may also hold `.blend`, `.py` and `.txt` (90 MB at most); a `.blend` must not
 contain text blocks (embedded scripts), scripted drivers or links to other files. To update
-a pack, submit it again (with its sources, if it has models) with a higher `version`.
+a pack, submit it again with a higher `version`.
 
 An edit of someone else's pack keeps `"derived_from": "<id>@<version>"` (`pack_fork.py`
 writes it), credits the original authors, and follows their licence.
@@ -50,11 +52,12 @@ Not accepted:
 - screenshots of the original game.
 
 **Licence:** one that allows edits, such as CC-BY-4.0, CC-BY-SA-4.0 or CC0-1.0 (not "ND").
-Packs here can be forked; that is the point of the sources.
+Packs here can be forked.
 
-**Packs with models must come with their sources**, so the maintainer can see how each model
-was made, and anyone can edit it. To share a model pack without its sources, use a
-private source or share the zip directly.
+**Sources are optional.** A pack made in the app's own editor (menu → Edit 3D → Save the pack
+as a file to share), or with models from anywhere you have the right to use, is accepted as
+long as it passes the checks and the review above. The models themselves are still reviewed:
+say in the pull request where they come from.
 
 ## Asking for a pack to be removed
 
@@ -71,7 +74,7 @@ python3 tools/pack_index.py publish .                    # [--withdrawn id@versi
 git add index.json index.json.sig index.key previews && git commit -m "Publish the index" && git push
 ```
 
-`publish` checks every pack and its sources again and writes the signed `index.json` at the
+`publish` checks every pack (and its sources, where given) again and writes the signed `index.json` at the
 top of the repository. GitHub Pages (`.github/workflows/pages.yml`) serves the repository as
 it is, so the zips stay in `submissions/`.
 
