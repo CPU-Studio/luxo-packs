@@ -1,6 +1,6 @@
 {
  "format": 1,
- "generated": "2026-11-22T06:39:12Z",
+ "generated": "2026-11-25T07:06:38Z",
  "packs": [
   {
    "id": "contra-diorama",
@@ -57,6 +57,35 @@
    "source_url": "submissions/contra-diorama-0.4.0-src.zip",
    "source_sha256": "6cb1de921f3eab51bf8d97db5cfb7e9df6e1f3ed6e2ea7425a8583d74fb2f93c",
    "source_size": 2320898,
+   "preview": null,
+   "withdrawn": false
+  },
+  {
+   "id": "fire-emblem-tabletop",
+   "version": "0.1.0",
+   "title": "Fire Emblem (GBA) Tabletop",
+   "authors": [
+    "kienct",
+    "Claude"
+   ],
+   "license": "CC-BY-SA-4.0",
+   "tier": "voxel",
+   "base": null,
+   "derived_from": null,
+   "targets": [
+    {
+     "system": "gba",
+     "sha1": [
+      "c735fdbb9e8abe19e0c6a44708df19acc962e204"
+     ]
+    }
+   ],
+   "url": "submissions/fire-emblem-tabletop-0.1.0.zip",
+   "sha256": "e3995c89daf8248bee14225021a271d329ae6ad1555c6993a7f3a9c06b596d8e",
+   "size": 1081156,
+   "source_url": null,
+   "source_sha256": null,
+   "source_size": null,
    "preview": null,
    "withdrawn": false
   },
